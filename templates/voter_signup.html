@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h3 class="text-center">Voter Signup</h3>
+        <form id="voterSignupForm">
+            <div class="form-group">
+                <label for="aadhaar">Aadhaar Number</label>
+                <input type="text" class="form-control" id="aadhaar" name="aadhaar" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </form>
+        <div id="message" class="alert alert-danger mt-3" style="display:none;"></div>
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="{{ url_for('voter_login') }}">Login</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('voterSignupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const aadhaar = document.getElementById('aadhaar').value;
+        const password = document.getElementById('password').value;
+
+        fetch("{{ url_for('voter_signup') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ aadhaar, password }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Optionally, you can redirect to login page after signup
+                window.location.href = "{{ url_for('voter_login') }}";
+            } else {
+                document.getElementById('message').style.display = 'block';
+                document.getElementById('message').textContent = data.message;
+            }
+        })
+        .catch(error => {
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('message').textContent = 'Error occurred. Try again.';
+        });
+    });
+</script>
+{% endblock %}

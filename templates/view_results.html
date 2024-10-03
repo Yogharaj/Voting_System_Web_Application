@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Election Results</h3>
+
+{% if message %}
+    <div class="alert alert-warning">
+        {{ message }}
+    </div>
+{% elif results %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Candidate</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidate, votes in results.items() %}
+            <tr>
+                <td>{{ candidate }}</td> 
+                <td>{{ votes }}</td>  
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info">
+        No results available.
+    </div>
+{% endif %}
+
+{% endblock %}

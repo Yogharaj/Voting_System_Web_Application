@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Welcome to the Online Voting System</h1>
+    <p class="lead">Your vote matters! Please login to cast your vote or manage elections.</p>
+
+    <div class="mt-4">
+        <a href="{{ url_for('admin_login') }}" class="btn btn-primary btn-lg mx-2">Admin Login</a>
+        <a href="{{ url_for('voter_login') }}" class="btn btn-success btn-lg mx-2">Voter Login</a>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+    .text-center {
+        margin-top: 10%;
+    }
+    .btn {
+        width: 200px;
+    }
+</style>
+{% endblock %}
